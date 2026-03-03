@@ -32,3 +32,12 @@ Markers indicate VaR exceptions (days where realised loss exceeds the predicted 
 - Breach rate: 2.3024%
 
 ![SPY GARCH VaR(99%) Backtest](reports/figures/SPY_var99_garch_backtest.png)
+
+## Reproducibility
+
+Create and activate the virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
