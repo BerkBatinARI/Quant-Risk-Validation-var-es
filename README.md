@@ -24,3 +24,11 @@ The plots below show the EWMA Normal-VaR threshold against realised 1-day losses
 #### Breach timeline (EWMA, 99%)
 Markers indicate VaR exceptions (days where realised loss exceeds the predicted 99% VaR threshold).
 ![SPY VaR breaches](reports/figures/SPY_var99_breaches.png)
+
+### GARCH(1,1) VaR (99%) — Walk-forward backtest
+
+- Obs used: 4,821
+- Breaches: 111
+- Breach rate: 2.3024%
+
+![SPY GARCH VaR(99%) Backtest](reports/figures/SPY_var99_garch_backtest.png)
