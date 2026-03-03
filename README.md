@@ -1,7 +1,7 @@
 # Time Series Risk Engine (Volatility → VaR/ES)
 
 > Work in progress — I’m building this incrementally and checking everything with walk-forward tests.  
-> Last updated: 2026-03-02
+> Last updated: 2026-03-03
 
 This repo is a small risk engine that turns a volatility forecast into 1-day **VaR** / **Expected Shortfall (ES)** estimates, then checks whether those risk numbers actually hold up in a simple backtest.
 
