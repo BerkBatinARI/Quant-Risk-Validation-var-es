@@ -7,6 +7,14 @@ This repo is a small risk engine that turns a volatility forecast into 1-day **V
 
 The goal is not “one perfect model”, but a clean comparison of sensible baselines (EWMA, GARCH, different return distributions) with transparent evaluation.
 
+
+## Project structure
+
+- `src/` — scripts (data download, feature engineering, risk models, backtests)
+- `data/` — raw and processed datasets (generated locally)
+- `reports/figures/` — key tracked outputs (plots embedded in this README)
+- `notebooks/` — exploration / scratch work
+
 ## Results so far (SPY, 1-day 99% VaR)
 
 - **EWMA + Normal VaR** breaches: **2.36%** (expected ~1.00%) → underestimates tail risk.
@@ -33,12 +41,7 @@ Markers indicate VaR exceptions (days where realised loss exceeds the predicted 
 
 
 ![SPY GARCH VaR(99%) Backtest](reports/figures/SPY_var99_garch_backtest.png)
-## Project structure
 
-- `src/` — scripts (data download, feature engineering, risk models, backtests)
-- `data/` — raw and processed datasets (generated locally)
-- `reports/figures/` — key tracked outputs (plots embedded in this README)
-- `notebooks/` — exploration / scratch work
 
 
 ## Reproducibility
