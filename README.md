@@ -15,6 +15,22 @@ The goal is not “one perfect model”, but a clean comparison of sensible base
 - `reports/figures/` — key tracked outputs (plots embedded in this README)
 - `notebooks/` — exploration / scratch work
 
+## What this project does
+
+This repository builds a small, reproducible risk-model validation pipeline for daily ETF returns.
+
+Given historical prices, it:
+
+- downloads market data (SPY/TLT/GLD) and computes daily log returns
+- estimates 1-day volatility using multiple models (EWMA, GARCH)
+- converts volatility into **1-day 99% Value-at-Risk (VaR)** estimates under different distributional assumptions (Normal vs Student-t)
+- evaluates the quality of VaR forecasts using:
+  - simple breach-rate backtesting (expected ≈ 1% at 99% VaR)
+  - Kupiec unconditional coverage test (LR statistic)
+
+The focus is not to “find one perfect model”, but to compare sensible baselines transparently, with tracked figures and clear diagnostics.
+
+
 ## Results so far (SPY, 1-day 99% VaR)
 
 - **EWMA + Normal VaR** breaches: **2.36%** (expected ~1.00%) → underestimates tail risk.

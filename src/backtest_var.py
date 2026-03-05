@@ -1,42 +1,51 @@
 import os
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 TICKER = "SPY"
+ALPHA = 0.99  # 99% VaR
+
 
 def main() -> None:
-    os.makedirs("reports", exist_ok=True)
+    print("RUNNING backtest_var.py main()")
+    os.makedirs("reports/figures", exist_ok=True)
 
-    df = pd.read_csv(f"data/{TICKER}_ewma_var_es.csv", parse_dates=["Date"])
-    df = df.dropna(subset=["ewma_sigma", "var_99"]).copy()
+    path = f"data/{TICKER}_ewma_var_es.csv"
+    df = pd.read_csv(path, parse_dates=["Date"]).sort_values("Date").reset_index(drop=True)
 
-    # A VaR breach happens if realised loss > VaR threshold
-    # loss = -return (since negative returns are losses)
-    df["loss"] = -df["log_return"]
-    df["breach"] = df["loss"] > df["var_99"]
+    # Keep rows where we actually have a VaR estimate
+    df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=["log_return", "var_99"]).copy()
 
-    n = len(df)
-    k = int(df["breach"].sum())
-    rate = k / n if n else float("nan")
+    # One-sided 99% VaR breach: return < -VaR
+    df["breach"] = df["log_return"] < (-df["var_99"])
+
+    n = int(len(df))
+    breaches = int(df["breach"].sum())
+    breach_rate = breaches / n if n > 0 else float("nan")
 
     print(f"Obs: {n}")
-    print(f"VaR(99%) breaches: {k} ({rate:.3%})  | expected ~1.000%")
+    print(f"VaR(99%) breaches: {breaches} ({breach_rate:.3%})  | expected ~{(1-ALPHA):.3%}")
 
-    # Plot: losses and VaR threshold (recent window for readability)
-    view = df.tail(800).copy()
+    # Plot: returns vs -VaR (threshold on same axis as returns)
+    plt.figure()
+    plt.plot(df["Date"], df["log_return"], label="log return")
+    plt.plot(df["Date"], -df["var_99"], label="-VaR(99%) EWMA")
 
-    fig, ax = plt.subplots()
-    ax.plot(view["Date"], view["loss"], label="1-day loss (-log return)")
-    ax.plot(view["Date"], view["var_99"], label="VaR 99% (EWMA)")
-    ax.set_title(f"{TICKER} — VaR(99%) backtest (last 800 days)")
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Value")
-    ax.legend()
-    fig.tight_layout()
+    breach_df = df[df["breach"]]
+    plt.scatter(breach_df["Date"], breach_df["log_return"], label="breaches", s=12)
 
-    out_path = f"reports/{TICKER}_var99_backtest.png"
-    fig.savefig(out_path, dpi=160)
-    print(f"Saved {out_path}")
+    plt.title(f"{TICKER} EWMA VaR(99%) Backtest")
+    plt.xlabel("Date")
+    plt.ylabel("Log return")
+    plt.legend()
+
+    fig_path = f"reports/figures/{TICKER}_var99_backtest.png"
+    plt.tight_layout()
+    plt.savefig(fig_path, dpi=200)
+    plt.close()
+    print(f"Saved {fig_path}")
+
 
 if __name__ == "__main__":
     main()
