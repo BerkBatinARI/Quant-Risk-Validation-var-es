@@ -33,6 +33,14 @@ The focus is not to “find one perfect model”, but to compare sensible baseli
 
 ## Results so far (SPY, 1-day 99% VaR)
 
+### Model comparison summary (SPY, 1-day 99% VaR)
+
+| Model | Obs | Breach rate | Expected | Kupiec `LR_uc` | Christoffersen `LR_cc` |
+|---|---:|---:|---:|---:|---:|
+| EWMA + Normal | 5263 | 2.356% | 1.000% | 70.80 | 75.16 |
+| EWMA + Student-t (df=6) | 5263 | 1.767% | 1.000% | 25.48 | 30.15 |
+| GARCH(1,1) + Normal | 4822 | 2.302% | 1.000% | 60.39 | 61.12 |
+
 - **EWMA + Normal VaR** breaches: **2.36%** (expected ~1.00%) → underestimates tail risk.
 - **EWMA + Student-t (df=6) VaR** breaches: **1.77%** → improved, still higher than expected.
 - Kupiec unconditional coverage test (df=1):  
