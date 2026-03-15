@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from plot_style import apply_finance_style, format_time_axis, add_subtitle
+from src.plot_style import apply_finance_style, format_time_axis, add_subtitle
 
 TICKER = "SPY"
 ALPHA = 0.99
@@ -25,10 +25,8 @@ def main() -> None:
 
     fig, ax = plt.subplots()
 
-    # Plot returns as a thin line for context
     ax.plot(df["Date"], df["log_return"], label="log return", alpha=0.75)
 
-    # Mark breaches
     bdf = df[df["breach"]]
     ax.scatter(bdf["Date"], bdf["log_return"], label="VaR breaches", s=18, zorder=3)
 

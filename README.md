@@ -117,15 +117,18 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Fast pipeline (recommended)
-python src/download_data.py
-python src/make_features.py
-python src/risk_ewma.py
-python src/risk_t_var_es.py
-python src/backtest_var.py
-python src/backtest_var_t.py
-python src/kupiec_test.py
+python -m src.download_data
+python -m src.make_features
+python -m src.risk_ewma
+python -m src.risk_t_var_es
+python -m src.backtest_var
+python -m src.backtest_var_t
+python -m src.kupiec_test
+python -m src.christoffersen_test
+python -m src.add_pvalues
+python -m src.plot_breaches
 
 # GARCH walk-forward VaR (slow; expanding-window refit)
-python src/risk_garch.py
-python src/backtest_var_garch.py
+python -m src.risk_garch
+python -m src.backtest_var_garch
 ```

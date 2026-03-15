@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from plot_style import apply_finance_style, format_time_axis, add_subtitle
+from src.plot_style import apply_finance_style, format_time_axis, add_subtitle
 
 TICKER = "SPY"
 ALPHA = 0.99  # 99% VaR
