@@ -1,4 +1,4 @@
-# Time Series Risk Engine (Volatility → VaR/ES)
+# Quant Risk Validation (VaR/ES) — EWMA vs Student-t vs GARCH
 
 > Work in progress — I’m building this incrementally and checking everything with walk-forward tests.  
 > Last updated: 2026-03-03
@@ -122,3 +122,4 @@ python src/kupiec_test.py
 # GARCH walk-forward VaR (slow; expanding-window refit)
 python src/risk_garch.py
 python src/backtest_var_garch.py
+```
